@@ -1,9 +1,12 @@
 package com.education.nawamaga.entity;
 
+import com.education.nawamaga.status.userRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -18,14 +21,10 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role role;
+    private userRole role;
 
-    public enum Role {
-        INSTRUCTOR,
-        STUDENT
-    }
-
-
+    @OneToMany(mappedBy = "instructor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Course> courses;
 
 
 }

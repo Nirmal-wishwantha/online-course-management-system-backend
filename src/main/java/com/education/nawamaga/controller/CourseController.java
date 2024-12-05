@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/course")
 public class CourseController {
@@ -27,21 +29,39 @@ public class CourseController {
     }
 
 
-    
-    @GetMapping("/user")
-    public ResponseEntity<CourseDto> getCourseUser(@RequestBody Integer id) {
-        CourseDto courseUser = courseService.getCourseUser(id);
-        return new ResponseEntity<>(courseUser, HttpStatus.OK);
+
+    @PutMapping("/{courseId}")
+    public ResponseEntity<CourseDto> updateCourse(@PathVariable Integer courseId ,@RequestBody CourseDto courseDto)    {
+
+        CourseDto courseDto1 = courseService.updateCourse(courseId, courseDto);
+
+        return new ResponseEntity<>(courseDto1, HttpStatus.OK);
 
     }
+    
 
 
     @DeleteMapping("/{id}")
-    public void deleteCourse(@PathVariable Integer id) {
-
+    public ResponseEntity<String> deleteCourse(@PathVariable Integer id) {
+        String delete = courseService.deleteCourse(id);
+        return new ResponseEntity<>(delete, HttpStatus.OK);
     }
 
-    @PutMapping()
-    public void updateCourse(){}
+
+    @GetMapping("/instructor/{id}")
+    public ResponseEntity<List<CourseDto>> getCourseUser(@PathVariable Integer id) {
+
+        List<CourseDto> courseUser = courseService.getCourseUser(id);
+
+        return new ResponseEntity<>(courseUser, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/all")
+    public ResponseEntity<List<CourseDto>> getAllCourses() {
+        List<CourseDto> courseUser = courseService.getAllCourses();
+        return new ResponseEntity<>(courseUser, HttpStatus.OK);
+    }
+
 
 }

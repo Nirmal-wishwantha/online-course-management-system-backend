@@ -29,8 +29,9 @@ public class UserServiceImpl implements UserService {
 
         String encodedPassword = Base64.getEncoder().encodeToString(userDto.getPassword().getBytes());
 
-        User save = userRepo.save(new User(null, userDto.getUserName(), encodedPassword, userDto.getRole()));
-        return new ResponseDto(save.getUserName(),"registered");
+        User save = userRepo.save(new User(null, userDto.getUserName(), encodedPassword, userDto.getRole(),null));
+
+        return new ResponseDto(save.getUserName(),save.getRole(),"registered");
 
     }
 
@@ -43,7 +44,7 @@ public class UserServiceImpl implements UserService {
         if (byUserName != null) {
             String token = jwtAuthentication.generateJwtAuthentication(byUserName);
             if (byUserName.getPassword().equals(encodedPassword)) {
-                return new ResponseDto(byUserName.getUserName(),"logged in",token);
+                return new ResponseDto(byUserName.getUserName(),"logged in",token,byUserName.getRole());
             }
 
         }

@@ -26,5 +26,9 @@ public class Course {
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CourseMaterial> materials;
 
-
+    public Course(String title, String description, User instructor) {
+        this.title = title;
+        this.description = description;
+        this.instructor = instructor;
+    }
 }

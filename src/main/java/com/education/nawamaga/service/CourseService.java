@@ -9,9 +9,11 @@ public interface CourseService {
 
 CourseDto addCourse(CourseDto course);
 
-CourseDto updateCourse(CourseDto course);
+CourseDto updateCourse(Integer id,CourseDto course);
 
-CourseDto getCourseUser(int id);
+String deleteCourse(Integer id);
+
+List<CourseDto> getCourseUser(Integer id);
 
 List<CourseDto> getAllCourses();
 

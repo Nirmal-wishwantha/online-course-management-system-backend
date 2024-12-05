@@ -1,6 +1,6 @@
 package com.education.nawamaga.status;
 
-public enum userStatus {
+public enum userRole {
 
     Instructor,
     Student
