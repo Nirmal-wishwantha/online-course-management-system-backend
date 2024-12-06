@@ -8,8 +8,6 @@ import java.util.List;
 
 public interface CourseRepo extends JpaRepository<Course, Integer> {
 
-
-
     List<Course> findByInstructorId(int instructorId);
 
 }

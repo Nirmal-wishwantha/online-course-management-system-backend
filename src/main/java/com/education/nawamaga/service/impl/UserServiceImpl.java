@@ -26,25 +26,31 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseDto RegisterUser(UserDto userDto) {
+        User byUserName = userRepo.findByUserName(userDto.getUserName());
+
+        if (byUserName != null) {
+            return new ResponseDto(userDto.getUserName(), "Already registered this username", "Already");
+        }
 
         String encodedPassword = Base64.getEncoder().encodeToString(userDto.getPassword().getBytes());
+        User save = userRepo.save(new User(null, userDto.getUserName(), encodedPassword, userDto.getRole(), null));
 
-        User save = userRepo.save(new User(null, userDto.getUserName(), encodedPassword, userDto.getRole(),null));
-
-        return new ResponseDto(save.getUserName(),save.getRole(),"registered");
-
+        return new ResponseDto(save.getId(), save.getUserName(), save.getRole(), "Registered");
     }
+
 
     @Override
     public ResponseDto LoginUser(UserDto userDto) {
 
         User byUserName = userRepo.findByUserName(userDto.getUserName());
+
         String encodedPassword = Base64.getEncoder().encodeToString(userDto.getPassword().getBytes());
 
         if (byUserName != null) {
             String token = jwtAuthentication.generateJwtAuthentication(byUserName);
             if (byUserName.getPassword().equals(encodedPassword)) {
-                return new ResponseDto(byUserName.getUserName(),"logged in",token,byUserName.getRole());
+                return new ResponseDto(byUserName.getId(),byUserName.getUserName(),byUserName.getRole(),token,
+                        "Login successful");
             }
 
         }

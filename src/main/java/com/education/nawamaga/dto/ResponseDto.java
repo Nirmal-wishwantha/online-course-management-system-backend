@@ -10,22 +10,32 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ResponseDto {
 
+    private Integer id;
     private String userName;
-    private String massage;
-    private String token;
     private userRole role;
+    private String token;
+    private String massage;
+    private String identity;
 
-    public ResponseDto(String userName, String massage, String token) {
+    public ResponseDto(String userName, String massage, String identity) {
         this.userName = userName;
         this.massage = massage;
-        this.token = token;
+        this.identity = identity;
     }
 
-    public ResponseDto(String userName, userRole role, String massage) {
+    public ResponseDto(Integer id, String userName, userRole role, String token, String massage) {
+        this.id = id;
+        this.userName = userName;
+        this.role = role;
+        this.token = token;
+        this.massage = massage;
+    }
+
+    public ResponseDto(Integer id, String userName, userRole role, String massage) {
+        this.id = id;
         this.userName = userName;
         this.role = role;
         this.massage = massage;
-
     }
 
     public ResponseDto(String userName, String massage) {
