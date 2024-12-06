@@ -1,12 +1,11 @@
 package com.education.nawamaga.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -17,9 +16,19 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String courseId;
-    private String fileName;
-    private  String fileUrl;
+    private String title;
+    private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "instructor_id", nullable = false)
+    private User instructor;
 
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CourseMaterial> materials;
+
+    public Course(String title, String description, User instructor) {
+        this.title = title;
+        this.description = description;
+        this.instructor = instructor;
+    }
 }

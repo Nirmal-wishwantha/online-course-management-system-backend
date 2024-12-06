@@ -1,12 +1,12 @@
 package com.education.nawamaga.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.education.nawamaga.status.userRole;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -18,8 +18,13 @@ public class User {
     private Integer id;
     private String userName;
     private String password;
-    private String role;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private userRole role;
+
+    @OneToMany(mappedBy = "instructor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Course> courses;
 
 
 }
